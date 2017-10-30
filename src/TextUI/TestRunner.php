@@ -279,13 +279,13 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
             }
 
             if (isset($arguments['deprecatedStrictModeOption'])) {
-                print "Warning:\tDeprecated option \"--strict\" used\n";
+                PHPUnit_Util_OB::my_print("Warning:\tDeprecated option \"--strict\" used\n");
             } elseif (isset($arguments['deprecatedStrictModeSetting'])) {
-                print "Warning:\tDeprecated configuration setting \"strict\" used\n";
+                PHPUnit_Util_OB::my_print("Warning:\tDeprecated configuration setting \"strict\" used\n");
             }
 
             if (isset($arguments['deprecatedSeleniumConfiguration'])) {
-                print "Warning:\tDeprecated configuration setting \"selenium\" used\n";
+                PHPUnit_Util_OB::my_print("Warning:\tDeprecated configuration setting \"selenium\" used\n");
             }
         }
 
@@ -604,7 +604,7 @@ class PHPUnit_TextUI_TestRunner extends PHPUnit_Runner_BaseTestRunner
         if ($this->printer !== null) {
             $this->printer->write($buffer);
         } else {
-            print $buffer;
+            PHPUnit_Util_OB::my_print($buffer);
         }
     }
 

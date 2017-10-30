@@ -126,13 +126,13 @@ class PHPUnit_TextUI_Command
         if ($this->arguments['listGroups']) {
             $this->printVersionString();
 
-            print "Available test group(s):\n";
+            PHPUnit_Util_OB::my_print("Available test group(s):\n");
 
             $groups = $suite->getGroups();
             sort($groups);
 
             foreach ($groups as $group) {
-                print " - $group\n";
+                PHPUnit_Util_OB::my_print(" - $group\n");
             }
 
             if ($exit) {
@@ -148,7 +148,7 @@ class PHPUnit_TextUI_Command
         try {
             $result = $runner->doRun($suite, $this->arguments);
         } catch (PHPUnit_Framework_Exception $e) {
-            print $e->getMessage() . "\n";
+            PHPUnit_Util_OB::my_print($e->getMessage() . "\n");
         }
 
         $ret = PHPUnit_TextUI_TestRunner::FAILURE_EXIT;
@@ -578,10 +578,10 @@ class PHPUnit_TextUI_Command
                     $this->arguments['configuration']
                 );
             } catch (Throwable $e) {
-                print $e->getMessage() . "\n";
+                PHPUnit_Util_OB::my_print($e->getMessage() . "\n");
                 exit(PHPUnit_TextUI_TestRunner::FAILURE_EXIT);
             } catch (Exception $e) {
-                print $e->getMessage() . "\n";
+                PHPUnit_Util_OB::my_print($e->getMessage() . "\n");
                 exit(PHPUnit_TextUI_TestRunner::FAILURE_EXIT);
             }
 
@@ -792,12 +792,12 @@ class PHPUnit_TextUI_Command
         $localFilename = realpath($_SERVER['argv'][0]);
 
         if (!is_writable($localFilename)) {
-            print 'No write permission to update ' . $localFilename . "\n";
+            PHPUnit_Util_OB::my_print('No write permission to update ' . $localFilename . "\n");
             exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
         }
 
         if (!extension_loaded('openssl')) {
-            print "The OpenSSL extension is not loaded.\n";
+            PHPUnit_Util_OB::my_print("The OpenSSL extension is not loaded.\n");
             exit(PHPUnit_TextUI_TestRunner::EXCEPTION_EXIT);
         }
 
@@ -824,7 +824,7 @@ class PHPUnit_TextUI_Command
         $caFile = dirname($tempFilename) . '/ca.pem';
         copy(__PHPUNIT_PHAR_ROOT__ . '/ca.pem', $caFile);
 
-        print 'Updating the PHPUnit PHAR ... ';
+        PHPUnit_Util_OB::my_print('Updating the PHPUnit PHAR ... ');
 
         $options = array(
             'ssl' => array(
@@ -864,11 +864,11 @@ class PHPUnit_TextUI_Command
         if (isset($e)) {
             unlink($caFile);
             unlink($tempFilename);
-            print " done\n\n" . $e->getMessage() . "\n";
+            PHPUnit_Util_OB::my_print(" done\n\n" . $e->getMessage() . "\n");
             exit(2);
         }
 
-        print " done\n";
+        PHPUnit_Util_OB::my_print(" done\n");
         exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
     }
 
@@ -883,10 +883,10 @@ class PHPUnit_TextUI_Command
         $isOutdated    = version_compare($latestVersion, PHPUnit_Runner_Version::id(), '>');
 
         if ($isOutdated) {
-            print "You are not using the latest version of PHPUnit.\n";
-            print 'Use "phpunit --self-upgrade" to install PHPUnit ' . $latestVersion . "\n";
+            PHPUnit_Util_OB::my_print("You are not using the latest version of PHPUnit.\n");
+            PHPUnit_Util_OB::my_print('Use "phpunit --self-upgrade" to install PHPUnit ' . $latestVersion . "\n");
         } else {
-            print "You are using the latest version of PHPUnit.\n";
+            PHPUnit_Util_OB::my_print("You are using the latest version of PHPUnit.\n");
         }
 
         exit(PHPUnit_TextUI_TestRunner::SUCCESS_EXIT);
@@ -899,7 +899,7 @@ class PHPUnit_TextUI_Command
     {
         $this->printVersionString();
 
-        print <<<EOT
+        PHPUnit_Util_OB::my_print('
 Usage: phpunit [options] UnitTest [UnitTest.php]
        phpunit [options] <directory>
 
@@ -968,7 +968,7 @@ Configuration Options:
   -c|--configuration <file> Read configuration from XML file.
   --no-configuration        Ignore default configuration file (phpunit.xml).
   --no-coverage             Ignore code coverage configuration.
-  --include-path <path(s)>  Prepend PHP's include_path with given path(s).
+  --include-path <path(s)>  Prepend PHP\'s include_path with given path(s).
   -d key[=value]            Sets a php.ini value.
 
 Miscellaneous Options:
@@ -976,12 +976,12 @@ Miscellaneous Options:
   -h|--help                 Prints this usage information.
   --version                 Prints the version and exits.
 
-EOT;
+');
 
         if (defined('__PHPUNIT_PHAR__')) {
-            print "\n  --check-version           Check whether PHPUnit is the latest version.";
-            print "\n  --self-update             Update PHPUnit to the latest version within the same\n                            release series.\n";
-            print "\n  --self-upgrade            Upgrade PHPUnit to the latest version.\n";
+            PHPUnit_Util_OB::my_print("\n  --check-version           Check whether PHPUnit is the latest version.");
+            PHPUnit_Util_OB::my_print("\n  --self-update             Update PHPUnit to the latest version within the same\n                            release series.\n");
+            PHPUnit_Util_OB::my_print("\n  --self-upgrade            Upgrade PHPUnit to the latest version.\n");
         }
     }
 
@@ -998,7 +998,7 @@ EOT;
             return;
         }
 
-        print PHPUnit_Runner_Version::getVersionString() . "\n\n";
+        PHPUnit_Util_OB::my_print(PHPUnit_Runner_Version::getVersionString() . "\n\n");
 
         $this->versionStringPrinted = true;
     }
@@ -1009,7 +1009,7 @@ EOT;
     {
         $this->printVersionString();
 
-        print $message . "\n";
+        PHPUnit_Util_OB::my_print($message . "\n");
 
         exit(PHPUnit_TextUI_TestRunner::FAILURE_EXIT);
     }

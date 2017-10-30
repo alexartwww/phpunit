@@ -13,7 +13,7 @@ set_include_path('{include_path}');
 $composerAutoload = {composerAutoload};
 $phar             = {phar};
 
-ob_start();
+my_ob_start();
 
 if ($composerAutoload) {
     require_once $composerAutoload;
@@ -48,7 +48,7 @@ function __phpunit_run_isolated_test()
     $test->setDependencyInput(unserialize('{dependencyInput}'));
     $test->setInIsolation(TRUE);
 
-    ob_end_clean();
+    my_ob_end_clean();
     $test->run($result);
     $output = '';
     if (!$test->hasExpectationOnOutput()) {
@@ -60,14 +60,14 @@ function __phpunit_run_isolated_test()
         $output = $stdout . $output;
     }
 
-    print serialize(
+    my_print(serialize(
       array(
         'testResult'    => $test->getResult(),
         'numAssertions' => $test->getNumAssertions(),
         'result'        => $result,
         'output'        => $output
       )
-    );
+    ));
 }
 
 $configurationFilePath = '{configurationFilePath}';

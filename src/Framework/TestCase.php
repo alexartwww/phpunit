@@ -365,7 +365,7 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
         if (!$this->outputBufferingActive) {
             return $this->output;
         } else {
-            return ob_get_contents();
+            return PHPUnit_Util_OB::my_ob_get_contents();
         }
     }
 
@@ -1998,14 +1998,14 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      */
     private function startOutputBuffering()
     {
-        while (!defined('PHPUNIT_TESTSUITE') && ob_get_level() > 0) {
-            ob_end_clean();
+        while (!defined('PHPUNIT_TESTSUITE') && PHPUnit_Util_OB::my_ob_get_level() > 0) {
+            PHPUnit_Util_OB::my_ob_end_clean();
         }
 
-        ob_start();
+        PHPUnit_Util_OB::my_ob_start();
 
         $this->outputBufferingActive = true;
-        $this->outputBufferingLevel  = ob_get_level();
+        $this->outputBufferingLevel  = PHPUnit_Util_OB::my_ob_get_level();
     }
 
     /**
@@ -2013,9 +2013,9 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
      */
     private function stopOutputBuffering()
     {
-        if (ob_get_level() != $this->outputBufferingLevel) {
-            while (ob_get_level() > 0) {
-                ob_end_clean();
+        if (PHPUnit_Util_OB::my_ob_get_level() != $this->outputBufferingLevel) {
+            while (PHPUnit_Util_OB::my_ob_get_level() > 0) {
+                PHPUnit_Util_OB::my_ob_end_clean();
             }
 
             throw new PHPUnit_Framework_RiskyTestError(
@@ -2023,7 +2023,7 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
             );
         }
 
-        $output = ob_get_contents();
+        $output = PHPUnit_Util_OB::my_ob_get_contents();
 
         if ($this->outputCallback === false) {
             $this->output = $output;
@@ -2034,10 +2034,10 @@ abstract class PHPUnit_Framework_TestCase extends PHPUnit_Framework_Assert imple
             );
         }
 
-        ob_end_clean();
+        PHPUnit_Util_OB::my_ob_end_clean();
 
         $this->outputBufferingActive = false;
-        $this->outputBufferingLevel  = ob_get_level();
+        $this->outputBufferingLevel  = PHPUnit_Util_OB::my_ob_get_level();
     }
 
     private function snapshotGlobalState()

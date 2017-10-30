@@ -184,7 +184,7 @@ abstract class PHPUnit_Util_PHP
         $result->endTest($test, $time);
 
         if (!empty($output)) {
-            print $output;
+            PHPUnit_Util_OB::my_print($output);
         }
     }
 

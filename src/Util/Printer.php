@@ -111,7 +111,7 @@ class PHPUnit_Util_Printer
         if ($this->out) {
             fflush($this->out);
         } else {
-            flush();
+            PHPUnit_Util_OB::my_flush();
         }
     }
 
@@ -131,7 +131,7 @@ class PHPUnit_Util_Printer
                 $buffer = htmlspecialchars($buffer, ENT_SUBSTITUTE);
             }
 
-            print $buffer;
+            PHPUnit_Util_OB::my_print($buffer);
 
             if ($this->autoFlush) {
                 $this->incrementalFlush();
