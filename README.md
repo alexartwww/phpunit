@@ -23,3 +23,6 @@ $ composer.phar update
 $ ant phar
 $ mv ./build/phpunit-<build-number>.phar /usr/local/bin/phpunit
 ```
+Of course you need to be sure that composer installed(https://getcomposer.org/download/) and Apache Ant (sudo apt-get install ant).
+
+You awesome!
