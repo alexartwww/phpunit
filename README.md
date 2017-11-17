@@ -6,7 +6,7 @@ PHPUnit fails with segmentation fault on PHP 5.5.9-1ubuntu4.22 in Docker contain
 
 ## What's the problem?
 
-This error comes from PHP Output Control Functions.
+This error comes from PHP Output Control Functions(ob_*).
 
 ## What's the solution?
 
